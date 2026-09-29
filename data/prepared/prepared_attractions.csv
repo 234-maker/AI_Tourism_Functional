@@ -1,0 +1,31 @@
+id,name,city,category,open_time,close_time,fee_adult_inr,fee_foreigner_inr,indicative_duration_hours,wheelchair_accessible,senior_friendly,walking_intensity,latitude,longitude,source_name,source_url
+LKO-001,Bara Imambara & Bhulbhulaiya,Lucknow,Heritage,06:00,17:00,50.0,500.0,2.5,False,False,High,26.869,80.9129,Uttar Pradesh Tourism Development Corporation,https://uptourism.gov.in/en/post/bara-imambara
+LKO-002,Chota Imambara (Hussainabad Imambara),Lucknow,Heritage,06:00,17:00,50.0,500.0,1.5,True,True,Low,26.8737,80.9043,Uttar Pradesh Tourism,https://uptourism.gov.in/en/post/chhota-imambara
+LKO-003,Rumi Darwaza,Lucknow,Heritage,00:00,23:59,0.0,0.0,0.5,True,True,Low,26.8711,80.9114,Uttar Pradesh Tourism,https://uptourism.gov.in/en/post/rumi-darwaza
+LKO-004,The British Residency,Lucknow,Heritage,09:00,17:30,25.0,300.0,2.0,True,True,Medium,26.8617,80.9272,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/the-residency
+LKO-005,Hazratganj & Royal Cafe Culinary Walk,Lucknow,Food,11:00,22:00,0.0,0.0,2.0,True,True,Low,26.8504,80.9427,Lucknow Municipal Corporation / UP Tourism,https://uptourism.gov.in/en/post/hazratganj
+LKO-006,Chowk Heritage Bazaar & Tunday Kababi Trail,Lucknow,Food,12:00,23:00,0.0,0.0,2.5,False,False,High,26.8643,80.9038,UP Tourism Awadh Culinary Trail,https://uptourism.gov.in/en/post/lucknow-cuisine
+LKO-007,Dr. Ambedkar Memorial Park,Lucknow,Culture,11:00,21:00,20.0,50.0,1.5,True,True,Medium,26.848,80.9754,Lucknow Development Authority,https://uptourism.gov.in/en/post/ambedkar-memorial-park
+VNS-001,Kashi Vishwanath Temple & Corridor,Varanasi,Spiritual,03:00,23:00,0.0,0.0,2.5,True,True,Medium,25.3109,83.0107,Shri Kashi Vishwanath Temple Trust / UP Tourism,https://shrikashivishwanath.org
+VNS-002,Dashashwamedh Ghat & Evening Ganga Aarti,Varanasi,Spiritual,05:00,23:00,0.0,0.0,2.0,False,True,Medium,25.3075,83.0104,Ganga Seva Nidhi / UP Tourism,https://uptourism.gov.in/en/post/dashashwamedh-ghat
+VNS-003,Assi Ghat & Subah-e-Banaras,Varanasi,Culture,04:30,22:00,0.0,0.0,2.0,True,True,Low,25.2903,83.0068,Subah-e-Banaras Society / UP Tourism,https://uptourism.gov.in/en/post/assi-ghat
+VNS-004,Sarnath Buddhist Archaeological Site & Museum,Varanasi,Heritage,09:00,17:00,25.0,300.0,3.0,True,True,Low,25.3811,83.0227,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/sarnath
+VNS-005,Banarasi Silk Weaving Village & Godowlia Market,Varanasi,Craft,10:30,20:30,0.0,0.0,2.0,False,True,Medium,25.3176,83.0039,Handloom Development Board / UP Tourism,https://uptourism.gov.in/en/post/banarasi-saree
+AGR-001,Taj Mahal,Agra,Heritage,06:00,18:30,50.0,1100.0,3.0,True,True,Medium,27.1751,78.0421,Archaeological Survey of India / Ministry of Tourism,https://www.tajmahal.gov.in
+AGR-002,Agra Fort,Agra,Heritage,06:00,18:00,50.0,650.0,2.5,True,True,Medium,27.1795,78.0211,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/agra-fort
+AGR-003,Fatehpur Sikri Royal City,Agra,Heritage,06:00,18:00,50.0,610.0,3.0,False,False,High,27.0945,77.6679,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/fatehpur-sikri
+AGR-004,Mehtab Bagh (Moonlight Garden),Agra,Nature,06:00,18:00,25.0,300.0,1.5,True,True,Low,27.1799,78.0422,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/mehtab-bagh
+AYD-001,Shri Ram Janmabhoomi Mandir,Ayodhya,Spiritual,06:30,21:30,0.0,0.0,2.5,True,True,Medium,26.7956,82.1943,Shri Ram Janmbhoomi Teerth Kshetra Trust / UP Tourism,https://srjbtkshetra.org
+AYD-002,Hanuman Garhi Temple,Ayodhya,Spiritual,05:00,22:00,0.0,0.0,1.5,False,False,Medium,26.7972,82.2023,UP Tourism Ayodhya Circuit,https://ayodhya.nic.in/tourist-place/hanumangarhi
+AYD-003,Saryu Ghat (Ram Ki Paidi) & Evening Aarti,Ayodhya,Culture,05:00,23:00,0.0,0.0,2.0,True,True,Low,26.8049,82.2081,Ayodhya Development Authority / UP Tourism,https://uptourism.gov.in/en/post/ram-ki-paidi
+PRY-001,Triveni Sangam & Boat Confluence Tour,Prayagraj,Spiritual,05:00,19:00,0.0,0.0,2.5,False,True,Medium,25.4262,81.8845,Prayagraj Mela Authority / UP Tourism,https://prayagraj.nic.in/tourist-place/sangam
+PRY-002,Anand Bhavan & Swaraj Bhavan,Prayagraj,Heritage,09:30,17:00,70.0,200.0,2.0,True,True,Low,25.4608,81.8601,Jawaharlal Nehru Memorial Fund / UP Tourism,https://uptourism.gov.in/en/post/anand-bhawan
+MTH-001,Shri Krishna Janmasthan Temple Complex,Mathura,Spiritual,05:30,21:30,0.0,0.0,2.0,True,True,Low,27.5056,77.6692,Shri Krishna Janmasthan Sansthan / UP Tourism,https://uptourism.gov.in/en/post/shri-krishna-janmabhoomi
+MTH-002,Prem Mandir & Musical Fountain,Vrindavan,Spiritual,05:30,20:30,0.0,0.0,2.0,True,True,Low,27.5714,77.6713,Jagadguru Kripalu Parishat / UP Tourism,https://uptourism.gov.in/en/post/prem-mandir
+AYD-004,Kanak Bhavan,Ayodhya,Spiritual,08:00,22:00,0.0,0.0,1.5,True,True,Low,26.7995,82.2008,UP Tourism Ayodhya Circuit,https://ayodhya.nic.in/tourist-place/kanak-bhawan
+AYD-005,Guptar Ghat & Saryu River Walk,Ayodhya,Nature,05:00,22:00,0.0,0.0,1.5,True,True,Low,26.782,82.1384,Ayodhya Development Authority,https://uptourism.gov.in/en/post/guptar-ghat
+PRY-003,Allahabad Fort & Patalpuri Temple / Akshayavat,Prayagraj,Heritage,07:00,18:00,0.0,0.0,1.5,False,True,Medium,25.4294,81.877,Archaeological Survey of India / Ministry of Defence,https://prayagraj.nic.in/tourist-place/allahabad-fort
+PRY-004,Khusro Bagh,Prayagraj,Heritage,06:00,19:00,0.0,0.0,1.5,True,True,Low,25.4419,81.8247,Archaeological Survey of India / UP Tourism,https://prayagraj.nic.in/tourist-place/khusro-bagh
+AGR-005,Tomb of I'timad-ud-Daulah (Baby Taj),Agra,Heritage,06:00,18:00,30.0,310.0,1.5,True,True,Low,27.193,78.0312,Archaeological Survey of India / UP Tourism,https://uptourism.gov.in/en/post/tomb-of-itmad-ud-daulah
+MTH-003,Banke Bihari Temple,Vrindavan,Spiritual,07:45,21:30,0.0,0.0,1.5,False,False,High,27.5815,77.7011,Shri Banke Bihari Ji Mandir Trust / UP Tourism,https://uptourism.gov.in/en/post/banke-bihari-temple
+MTH-004,ISKCON Temple Vrindavan (Sri Krishna Balaram Mandir),Vrindavan,Spiritual,04:30,20:45,0.0,0.0,2.0,True,True,Low,27.5727,77.6857,ISKCON Vrindavan / UP Tourism,https://www.iskconvrindavan.com
