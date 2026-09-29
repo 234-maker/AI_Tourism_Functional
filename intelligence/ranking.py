@@ -9,7 +9,15 @@ from typing import List, Dict, Any
 class PlaceRanker:
     def __init__(self, attractions_path: str = None):
         if attractions_path is None:
-            attractions_path = os.path.join("data", "prepared", "prepared_attractions.json")
+            # 1. Base directory relative to this file
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+            candidate = os.path.join(base_dir, "data", "prepared", "prepared_attractions.json")
+            if os.path.exists(candidate):
+                attractions_path = candidate
+            elif os.path.exists(os.path.join("data", "prepared", "prepared_attractions.json")):
+                attractions_path = os.path.join("data", "prepared", "prepared_attractions.json")
+            else:
+                attractions_path = os.path.join("/var/task", "data", "prepared", "prepared_attractions.json")
         with open(attractions_path, "r", encoding="utf-8") as f:
             self.attractions: List[Dict[str, Any]] = json.load(f)
 

@@ -37,7 +37,16 @@ python -m uvicorn backend.app:app --host 127.0.0.1 --port 8000
 ```
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your web browser.
 
-### 2. Run the Spring Boot Backend (Optional)
+### 2. Deploy to Vercel (One-Click / Git Push)
+The project includes pre-configured Vercel Serverless Function & Edge Static support:
+- `vercel.json`: Handles routing to `api/index.py` and static asset caching.
+- `api/index.py`: Serverless FastAPI entry point for Vercel.
+- `public/`: Pre-synchronized glassmorphic UI assets (`index.html`, `style.css`, `app.js`).
+- `requirements.txt` & `.python-version`: Python 3.12 environment configuration.
+
+Simply import the GitHub repository into your Vercel Dashboard and click **Deploy**. No special build command or output directory overrides are needed.
+
+### 3. Run the Spring Boot Backend (Optional)
 ```bash
 cd backend_spring_boot
 mvn clean spring-boot:run

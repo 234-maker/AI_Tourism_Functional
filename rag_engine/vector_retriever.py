@@ -12,7 +12,15 @@ from sklearn.metrics.pairwise import cosine_similarity
 class TourismKnowledgeRetriever:
     def __init__(self, chunks_path: Optional[str] = None):
         if chunks_path is None:
-            chunks_path = os.path.join("data", "prepared", "tourism_chunks.json")
+            # 1. Base directory relative to this file
+            base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+            candidate = os.path.join(base_dir, "data", "prepared", "tourism_chunks.json")
+            if os.path.exists(candidate):
+                chunks_path = candidate
+            elif os.path.exists(os.path.join("data", "prepared", "tourism_chunks.json")):
+                chunks_path = os.path.join("data", "prepared", "tourism_chunks.json")
+            else:
+                chunks_path = os.path.join("/var/task", "data", "prepared", "tourism_chunks.json")
         self.chunks_path = chunks_path
         self.chunks: List[Dict[str, Any]] = []
         self.vectorizer: Optional[TfidfVectorizer] = None

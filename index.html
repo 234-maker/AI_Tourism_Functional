@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-Based Tourism Recommendation and Itinerary Planner for Uttar Pradesh Circuits with RAG and Sarvam Indic AI.">
+  <title>BharatYatra AI | Uttar Pradesh Tourism Planner & Grounded RAG Assistant</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header" id="site-header">
+    <div class="container header-content">
+      <a href="#" class="brand-badge" id="brand-badge">
+        <div class="brand-logo-icon">🛕</div>
+        <div class="brand-text">
+          <h1>Bharat<span>Yatra AI</span></h1>
+          <div class="brand-tagline" data-i18n="brand_tagline">Uttar Pradesh Curated Circuits • Grounded RAG Assistant</div>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav class="nav-tabs" id="nav-tabs">
+        <button class="tab-btn active" id="tab-btn-planner" data-tab="planner-panel">
+          <span>🗺️</span> <span data-i18n="tab_planner">Itinerary Planner</span>
+        </button>
+        <button class="tab-btn" id="tab-btn-chat" data-tab="chat-panel">
+          <span>💬</span> <span data-i18n="tab_chat">AI Travel Bot (RAG)</span>
+        </button>
+        <button class="tab-btn" id="tab-btn-alternates" data-tab="alternates-panel">
+          <span>🔄</span> <span data-i18n="tab_alternates">Alternates Solver</span>
+        </button>
+        <button class="tab-btn" id="tab-btn-audit" data-tab="audit-panel">
+          <span>🛡️</span> <span data-i18n="tab_audit">Responsible AI Audit</span>
+        </button>
+      </nav>
+
+      <!-- Language Selector -->
+      <div class="header-actions">
+        <div class="lang-selector-card">
+          <span style="font-size: 1.1rem;">🌐</span>
+          <select id="global-lang-select" aria-label="Select Interface Language">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी (Hindi)</option>
+            <option value="Hinglish">Hinglish</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero-section">
+    <div class="container">
+      <div class="hero-pill">
+        <span>✨</span> <span data-i18n="hero_pill">Retrieval-Augmented Generation • Source-Grounded • Sarvam Indic AI</span>
+      </div>
+      <h2 class="hero-title" id="hero-title-elem">
+        <span data-i18n="hero_title_prefix">Discover the Eternal Soul of</span> <span class="gradient-text">Uttar Pradesh</span> <span data-i18n="hero_title_suffix">with Intelligent Planning</span>
+      </h2>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        Say goodbye to scattered blogs. Generate realistic, day-wise itineraries respecting your budget, time, senior-citizen mobility, and language comfort — with 100% verified source citations.
+      </p>
+
+      <!-- Destination Selector Strip -->
+      <div class="destination-strip" id="destination-strip">
+        <div class="dest-chip active" data-city="Lucknow" id="chip-lucknow">
+          <div class="dest-icon">🕌</div>
+          <div class="dest-name">Lucknow</div>
+          <div class="dest-meta" data-i18n="dest_lko_meta">Heritage & Awadhi Food</div>
+        </div>
+        <div class="dest-chip" data-city="Varanasi" id="chip-varanasi">
+          <div class="dest-icon">🪔</div>
+          <div class="dest-name">Varanasi</div>
+          <div class="dest-meta" data-i18n="dest_vns_meta">Ghats & Moksha Nagari</div>
+        </div>
+        <div class="dest-chip" data-city="Agra" id="chip-agra">
+          <div class="dest-icon">🏛️</div>
+          <div class="dest-name">Agra</div>
+          <div class="dest-meta" data-i18n="dest_agr_meta">Taj Mahal & Mughal Art</div>
+        </div>
+        <div class="dest-chip" data-city="Ayodhya" id="chip-ayodhya">
+          <div class="dest-icon">🚩</div>
+          <div class="dest-name">Ayodhya</div>
+          <div class="dest-meta" data-i18n="dest_ayd_meta">Ram Janmabhoomi & Saryu</div>
+        </div>
+        <div class="dest-chip" data-city="Prayagraj" id="chip-prayagraj">
+          <div class="dest-icon">🌊</div>
+          <div class="dest-name">Prayagraj</div>
+          <div class="dest-meta" data-i18n="dest_pry_meta">Triveni Sangam & Fort</div>
+        </div>
+        <div class="dest-chip" data-city="Mathura" id="chip-mathura">
+          <div class="dest-icon">🦚</div>
+          <div class="dest-name">Mathura & Vrindavan</div>
+          <div class="dest-meta" data-i18n="dest_mth_meta">Braj Bhumi & Prem Mandir</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main View Panels -->
+  <main class="container" id="main-content">
+
+    <!-- ==================== VIEW 1: ITINERARY PLANNER ==================== -->
+    <section class="view-panel active" id="planner-panel">
+      <div class="planner-grid">
+        
+        <!-- Controls Column -->
+        <div class="glass-card" id="planner-controls-card">
+          <h3 class="card-title">
+            <span>⚙️</span> <span data-i18n="form_title">Trip Preferences</span>
+          </h3>
+
+          <form id="itinerary-form">
+            <!-- Selected City -->
+            <div class="form-group">
+              <label class="form-label" for="city-select" data-i18n="label_city">Destination City</label>
+              <select id="city-select" class="form-select" required>
+                <option value="Lucknow">Lucknow (लखनऊ)</option>
+                <option value="Varanasi">Varanasi (वाराणसी)</option>
+                <option value="Agra">Agra (आगरा)</option>
+                <option value="Ayodhya">Ayodhya (अयोध्या)</option>
+                <option value="Prayagraj">Prayagraj (प्रयागराज)</option>
+                <option value="Mathura">Mathura & Vrindavan (मथुरा-वृंदावन)</option>
+              </select>
+            </div>
+
+            <!-- Trip Duration -->
+            <div class="form-group">
+              <label class="form-label" for="duration-select" data-i18n="label_duration">Trip Duration</label>
+              <select id="duration-select" class="form-select">
+                <option value="1" data-i18n="opt_dur_1">1 Day (Quick Highlights)</option>
+                <option value="2" selected data-i18n="opt_dur_2">2 Days (Recommended Weekend)</option>
+                <option value="3" data-i18n="opt_dur_3">3 Days (Immersive Circuit)</option>
+                <option value="4" data-i18n="opt_dur_4">4 Days (Extended Experience)</option>
+              </select>
+            </div>
+
+            <!-- Traveller Type -->
+            <div class="form-group">
+              <label class="form-label" for="traveller-select" data-i18n="label_traveller">Traveller Group</label>
+              <select id="traveller-select" class="form-select">
+                <option value="Family" selected data-i18n="opt_trav_fam">Family with Children</option>
+                <option value="Senior Citizens" data-i18n="opt_trav_sen">Senior Citizens (Low exertion)</option>
+                <option value="Solo" data-i18n="opt_trav_solo">Solo Explorer</option>
+                <option value="Friends" data-i18n="opt_trav_fri">Friends / Couples</option>
+              </select>
+            </div>
+
+            <!-- Budget Level -->
+            <div class="form-group">
+              <label class="form-label" for="budget-select" data-i18n="label_budget">Budget Preference</label>
+              <select id="budget-select" class="form-select">
+                <option value="Budget" data-i18n="opt_bud_1">Budget Friendly (Public transit & free entry)</option>
+                <option value="Moderate" selected data-i18n="opt_bud_2">Moderate (Standard entry & autos/cabs)</option>
+                <option value="Luxury" data-i18n="opt_bud_3">Comfort / Premium (Private AC cabs & tours)</option>
+              </select>
+            </div>
+
+            <!-- Mobility Needs -->
+            <div class="form-group">
+              <label class="form-label" for="mobility-select" data-i18n="label_mobility">Accessibility Needs</label>
+              <select id="mobility-select" class="form-select">
+                <option value="Standard" selected data-i18n="opt_mob_std">Standard (Comfortable walking)</option>
+                <option value="Low Walking" data-i18n="opt_mob_low">Low Walking (Avoid steep stairs/long walks)</option>
+                <option value="Wheelchair" data-i18n="opt_mob_whl">Wheelchair Barrier-Free Access</option>
+              </select>
+            </div>
+
+            <!-- Interests Multi-select -->
+            <div class="form-group">
+              <label class="form-label" data-i18n="label_interests">Key Interests</label>
+              <div class="tag-cloud" id="interest-tag-cloud">
+                <div class="interest-tag selected" data-value="Heritage" data-i18n="tag_heritage">Heritage</div>
+                <div class="interest-tag selected" data-value="Spiritual" data-i18n="tag_spiritual">Spiritual</div>
+                <div class="interest-tag selected" data-value="Food" data-i18n="tag_food">Awadhi & Local Food</div>
+                <div class="interest-tag" data-value="Culture" data-i18n="tag_culture">Culture & Arts</div>
+                <div class="interest-tag" data-value="Architecture" data-i18n="tag_arch">Architecture</div>
+                <div class="interest-tag" data-value="Photography" data-i18n="tag_photo">Photography</div>
+                <div class="interest-tag" data-value="Craft" data-i18n="tag_craft">Handloom & Crafts</div>
+                <div class="interest-tag" data-value="Nature" data-i18n="tag_nature">Gardens & Nature</div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" id="btn-generate-itinerary">
+              <span id="btn-gen-text" data-i18n="btn_generate">Generate Grounded Itinerary</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Output Column -->
+        <div class="results-container" id="itinerary-results-container">
+          <div class="itinerary-header-glass" id="itinerary-header-card">
+            <h3 id="plan-headline" style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--text-white); margin-bottom: 6px;">
+              Your Personalized Travel Itinerary
+            </h3>
+            <p id="plan-subheadline" style="color: var(--text-secondary); font-size: 0.92rem;">
+              Generated with spatial proximity clustering, timing validation, and verified source citations.
+            </p>
+
+            <div class="itinerary-meta-grid" id="itinerary-meta-grid">
+              <div class="meta-metric-item">
+                <span class="meta-metric-label" data-i18n="meta_duration_lbl">Duration</span>
+                <span class="meta-metric-val" id="meta-duration">2 Days</span>
+              </div>
+              <div class="meta-metric-item">
+                <span class="meta-metric-label" data-i18n="meta_tickets_lbl">Monument Tickets</span>
+                <span class="meta-metric-val" id="meta-tickets">₹100</span>
+              </div>
+              <div class="meta-metric-item">
+                <span class="meta-metric-label" data-i18n="meta_budget_lbl">Est. Total Budget</span>
+                <span class="meta-metric-val" id="meta-budget">₹2,500</span>
+              </div>
+              <div class="meta-metric-item">
+                <span class="meta-metric-label" data-i18n="meta_status_lbl">Grounding Status</span>
+                <span class="meta-metric-val" id="meta-status" style="color: var(--accent-emerald);">Verified Grounded</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day-by-Day Schedule List -->
+          <div id="day-plans-wrapper"></div>
+
+          <!-- Dynamic Alternates Drawer -->
+          <div class="glass-card" id="alternates-summary-box" style="margin-top: 10px; border-style: dashed;">
+            <div style="font-size: 0.95rem; font-weight: 700; color: #a5b4fc; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+              <span>💡</span> <span data-i18n="alt_box_title">Smart Alternates Ready (If constraints change)</span>
+            </div>
+            <div id="alternates-list-container" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== VIEW 2: AI TRAVEL BOT (RAG) ==================== -->
+    <section class="view-panel" id="chat-panel">
+      <div class="chat-container">
+        
+        <!-- Sidebar Prompt Suggestions & Voice -->
+        <div class="chat-sidebar">
+          <h4 style="font-family: var(--font-heading); font-size: 1.05rem; color: var(--text-white);">
+            <span>🎙️</span> <span data-i18n="chat_sidebar_title">Sarvam Indic AI Queries</span>
+          </h4>
+          <p style="font-size: 0.82rem; color: var(--text-secondary);" data-i18n="chat_sidebar_desc">
+            Ask in English, Hindi (हिंदी) or Hinglish. Grounded answers derived solely from official verified UP Tourism records.
+          </p>
+
+          <div class="prompt-chips" id="prompt-chips-container">
+            <!-- Dynamically populated or localized -->
+          </div>
+
+          <!-- Sarvam Speech Controls -->
+          <div style="margin-top: auto; border-top: var(--glass-border); padding-top: 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-gold); font-weight: 700; margin-bottom: 10px; letter-spacing: 0.04em;">
+              SARVAM SAARAS & BULBUL SUITE
+            </div>
+            <button class="btn-primary" id="btn-voice-input" style="padding: 12px; font-size: 0.88rem; margin-top: 0;">
+              <span>🎤</span> <span data-i18n="btn_voice">Simulate Voice Input (Saaras)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Main Area -->
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="chat-bot-status">
+              <div class="status-dot"></div>
+              <div>
+                <strong style="font-size: 1.02rem; color: var(--text-white);" data-i18n="bot_title">BharatYatra AI Assistant</strong>
+                <div style="font-size: 0.75rem; color: var(--accent-emerald);" data-i18n="bot_subtitle">Grounded with Citations • Zero Hallucination Mode</div>
+              </div>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">
+              RAG & Indic AI Pipeline
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chat-messages">
+            <div class="message-bubble bot" id="bot-welcome-msg">
+              Namaste! 🙏 I am your grounded travel advisor for Uttar Pradesh. 
+              I can assist you with monuments, timings, ticket fees, accessibility, and local food across 
+              <strong>Lucknow, Varanasi, Agra, Ayodhya, Prayagraj, and Mathura-Vrindavan</strong>. 
+              How can I assist your trip today?
+            </div>
+          </div>
+
+          <div class="chat-input-bar">
+            <input type="text" class="chat-input" id="chat-input-text" placeholder="Ask about timings, ticket prices, accessibility, food..." autocomplete="off">
+            <button class="btn-icon" id="btn-read-aloud" title="Read Aloud via Sarvam Bulbul TTS">🔊</button>
+            <button class="btn-icon btn-send" id="btn-send-chat" title="Send Question">➤</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== VIEW 3: ALTERNATES & CONSTRAINT SOLVER ==================== -->
+    <section class="view-panel" id="alternates-panel">
+      <div class="glass-card" style="max-width: 840px; margin: 0 auto;">
+        <h3 class="card-title">
+          <span>🔄</span> <span data-i18n="alt_solver_title">Dynamic Constraint Solver & Alternative Recommender</span>
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.94rem; margin-bottom: 24px;" data-i18n="alt_solver_desc">
+          Test how our Intelligence Layer handles unexpected constraints in real-time — such as Friday monument closures, sudden knee pain, or strict budget limits.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 22px;">
+          <div>
+            <label class="form-label" for="alt-place-select" data-i18n="label_alt_place">Select Primary Attraction</label>
+            <select id="alt-place-select" class="form-select">
+              <option value="AGR-001">Taj Mahal (Agra)</option>
+              <option value="LKO-001">Bara Imambara & Bhulbhulaiya (Lucknow)</option>
+              <option value="VNS-001">Kashi Vishwanath Temple (Varanasi)</option>
+              <option value="AYD-002">Hanuman Garhi Temple (Ayodhya)</option>
+              <option value="PRY-001">Triveni Sangam (Prayagraj)</option>
+              <option value="MTH-003">Banke Bihari Temple (Vrindavan)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label" for="alt-constraint-select" data-i18n="label_alt_constraint">Trigger Unexpected Constraint</label>
+            <select id="alt-constraint-select" class="form-select">
+              <option value="DAY_CLOSURE" data-i18n="opt_alt_fri">Day Closure (e.g. Friday closure)</option>
+              <option value="MOBILITY_RESTRICTION" data-i18n="opt_alt_mob">Mobility Restriction (Zero stairs, flat ramps)</option>
+              <option value="BUDGET_CUT" data-i18n="opt_alt_bud">Budget Cut (Strict low-cost / free spots)</option>
+              <option value="TIME_SHORTAGE" data-i18n="opt_alt_tim">Time Shortage (Quick visit < 1.5h)</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-solve-alternates" style="margin-top: 0; margin-bottom: 26px;">
+          <span data-i18n="btn_solve_alt">Solve & Recommend Grounded Alternates</span>
+        </button>
+
+        <div id="alternates-results-box" style="display: none;">
+          <h4 style="font-family: var(--font-heading); color: var(--accent-gold-light); margin-bottom: 14px; font-size: 1.15rem;" data-i18n="alt_results_header">
+            Recommended Alternatives from Verified Knowledge Base:
+          </h4>
+          <div id="alternates-cards-list" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== VIEW 4: RESPONSIBLE AI AUDIT & FEEDBACK ==================== -->
+    <section class="view-panel" id="audit-panel">
+      <div class="audit-grid">
+        
+        <div class="glass-card" style="border-color: rgba(52, 211, 153, 0.4);">
+          <div style="font-size: 0.82rem; text-transform: uppercase; color: var(--accent-emerald); font-weight: 700;" data-i18n="audit_m1_tag">
+            Responsible AI Metric
+          </div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.25rem; margin-top: 6px; color: var(--text-white);" data-i18n="audit_m1_title">
+            Knowledge Grounding Coverage
+          </h4>
+          <div class="audit-metric-number">100%</div>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 10px;" data-i18n="audit_m1_desc">
+            Every single attraction record maps directly to verified government and archaeological registry URLs.
+          </p>
+        </div>
+
+        <div class="glass-card" style="border-color: rgba(52, 211, 153, 0.4);">
+          <div style="font-size: 0.82rem; text-transform: uppercase; color: var(--accent-emerald); font-weight: 700;" data-i18n="audit_m2_tag">
+            Safety & Accuracy
+          </div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.25rem; margin-top: 6px; color: var(--text-white);" data-i18n="audit_m2_title">
+            Hallucination Refusal Rate
+          </h4>
+          <div class="audit-metric-number">0.0%</div>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 10px;" data-i18n="audit_m2_desc">
+            Enforced strict caveat flags and refusals when claims are not corroborated by verified knowledge chunks.
+          </p>
+        </div>
+
+        <div class="glass-card">
+          <div style="font-size: 0.82rem; text-transform: uppercase; color: var(--accent-gold); font-weight: 700;" data-i18n="audit_m3_tag">
+            Knowledge Base Scale
+          </div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.25rem; margin-top: 6px; color: var(--text-white);" data-i18n="audit_m3_title">
+            Curated Assets & Vectors
+          </h4>
+          <div class="audit-metric-number" style="color: var(--accent-gold);" id="audit-curated-count">30</div>
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-top: 10px;" data-i18n="audit_m3_desc">
+            30 verified destinations, 33 FAQ pairs, and 123 semantic vector chunks across 6 Uttar Pradesh circuits.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- User Feedback Submission Form -->
+      <div class="glass-card" style="margin-top: 30px; max-width: 740px;">
+        <h3 class="card-title">
+          <span>📝</span> <span data-i18n="feedback_title">Tourist Feedback & Evaluation Registry</span>
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px;" data-i18n="feedback_desc">
+          Help us refine the recommendation engine. Submissions are persisted into the SQLite audit table.
+        </p>
+
+        <form id="feedback-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px;">
+            <div>
+              <label class="form-label" for="feedback-destination" data-i18n="label_fb_dest">Destination Visited</label>
+              <select id="feedback-destination" class="form-select">
+                <option value="Lucknow">Lucknow</option>
+                <option value="Varanasi">Varanasi</option>
+                <option value="Agra">Agra</option>
+                <option value="Ayodhya">Ayodhya</option>
+                <option value="Prayagraj">Prayagraj</option>
+                <option value="Mathura">Mathura & Vrindavan</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label" for="feedback-category" data-i18n="label_fb_cat">Category</label>
+              <select id="feedback-category" class="form-select">
+                <option value="ACCURACY" data-i18n="opt_fb_1">Accuracy of Timings / Prices</option>
+                <option value="PACING" data-i18n="opt_fb_2">Pacing / Visit Duration</option>
+                <option value="QUALITY" data-i18n="opt_fb_3">Recommendation Quality</option>
+                <option value="OTHER" data-i18n="opt_fb_4">Other Suggestion</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="feedback-rating" data-i18n="label_fb_rating">Rating (1 to 5 Stars)</label>
+            <select id="feedback-rating" class="form-select">
+              <option value="5">⭐⭐⭐⭐⭐ 5 Stars (Exceptional Grounding)</option>
+              <option value="4" selected>⭐⭐⭐⭐ 4 Stars (Very Good)</option>
+              <option value="3">⭐⭐⭐ 3 Stars (Average)</option>
+              <option value="2">⭐⭐ 2 Stars (Needs Improvement)</option>
+              <option value="1">⭐ 1 Star (Inaccurate Timing/Price)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="feedback-comment" data-i18n="label_fb_comment">Comments / Observations</label>
+            <textarea id="feedback-comment" class="form-input" rows="3" placeholder="Provide any comments or observed changes on-site..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" id="btn-submit-feedback" style="margin-top: 0;">
+            <span data-i18n="btn_submit_fb">Submit Responsible AI Feedback</span>
+          </button>
+        </form>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div style="font-weight: 600; color: var(--text-white);">AI-Based Tourism Recommendation and Itinerary Planner Prototype</div>
+      <div class="footer-credits">
+        Submitted by Aryan Srivastav, Jyotirmay Singh & Abhinav Mishra • Guided by Mrs. Neha Anand (SRMU Lucknow)
+      </div>
+      <div style="margin-top: 8px; font-size: 0.78rem; color: var(--text-muted);">
+        Data grounded via UP Tourism Development Corporation & Archaeological Survey of India. Indic AI via Sarvam Saaras & Bulbul.
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
